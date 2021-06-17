@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import HelpList from './HelpList'
 import * as Config from './Config'
+
+var searches = []
 
 const SearchForm = () => {
 
@@ -8,12 +10,30 @@ const SearchForm = () => {
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState(null)
 
+    // todo: this feels hacky, with more time i would look at using react-router instead
+    // of vanilla javascript to handle the back button
+    useEffect(() => {
+        const handleBackButtonEvent = (e) => {
+            searches.pop()
+            if (searches.length > 0) {
+                let previousQuery = searches[searches.length - 1]
+                document.querySelector('[name="f-search"]').value = previousQuery
+                callApi(previousQuery)
+            }
+        }
+        window.history.pushState(null, null, window.location.pathname)
+        window.addEventListener('popstate', handleBackButtonEvent)
+        return () => {
+            window.removeEventListener('popstate', handleBackButtonEvent)
+        }
+    }, [data])
+
     const handleSubmit = (e) => {
         e.preventDefault()
         // queryselector or bind variable
         const queryString = document.querySelector('[name="f-search"]').value
-        console.log(queryString)
         if (queryString.length > 0) {
+            searches.push(queryString)
             callApi(queryString)
         }
     }
