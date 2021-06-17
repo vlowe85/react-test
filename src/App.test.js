@@ -26,3 +26,31 @@ test('renders a search button', () => {
   const buttonElement = screen.getByText('Search')
   expect(buttonElement).toBeInTheDocument()
 });
+
+test('renders api no results', async () => {
+  render(<App />)
+
+  const searchElement = screen.getByPlaceholderText('e.g. Broadband')
+  const buttonElement = screen.getByText('Search')
+
+  userEvent.type(searchElement, 'Kskskskx')
+  userEvent.click(buttonElement)
+
+  const results = await screen.findByText('Sorry, no results found')
+
+  expect(results).toBeInTheDocument()
+});
+
+test('renders api results', async () => {
+  render(<App />)
+
+  const searchElement = screen.getByPlaceholderText('e.g. Broadband')
+  const buttonElement = screen.getByText('Search')
+
+  userEvent.type(searchElement, 'mobile')
+  userEvent.click(buttonElement)
+
+  const results = await screen.findByRole('listitem')
+
+  expect(results).toBeInTheDocument()
+});
