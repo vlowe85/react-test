@@ -1,6 +1,21 @@
 const SearchForm = () => {
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        // queryselector or bind variable
+        const queryString = document.querySelector('[name="f-search"]').value
+        console.log(queryString)
+        if (queryString.length > 0) {
+            callApi(queryString)
+        }
+    }
+
+    const callApi = (query) => {
+        console.log("lets find some "+query)
+    }
+
     return (
-        <form role="search">
+        <form role="search" onSubmit={handleSubmit}>
             <fieldset>
                 <li className="c-form-list__item">
                     <label className="c-form-label" htmlFor="f-combo">
@@ -20,4 +35,4 @@ const SearchForm = () => {
     )
 }
 
-export default SearchForm;
+export default SearchForm
