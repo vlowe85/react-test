@@ -12,6 +12,23 @@ const SearchForm = () => {
 
     const callApi = (query) => {
         console.log("lets find some "+query)
+        fetch('https://help-search-api-prod.herokuapp.com/search?query=' + query)
+        .then(response => {
+            if (!response.ok) { // error coming back from server
+                console.log("bad response")
+                // todo: implement some logging / reporting on errors
+            }
+            response.json().then(json => {
+                if (json.results.length === 0) {
+                    console.log("no results")
+                }
+                console.log(json.results)
+            })
+        })
+        .catch(error => {
+            // error may not be suitable to output to users
+            console.log("error!!")
+        })
     }
 
     return (
