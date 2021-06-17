@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App';
 
@@ -53,4 +53,4 @@ test('renders api results', async () => {
   const results = await screen.findByRole('listitem')
 
   expect(results).toBeInTheDocument()
-});
+})
