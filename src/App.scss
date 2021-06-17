@@ -15,7 +15,10 @@
 	}
     .c-tile__body {
         min-height: 120px !important;
-        }
+    }
+    .active {
+        font-weight: 700;
+    }
     .c-header__logo {
         display: inline-block;
         vertical-align: middle;

@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import * as Config from './Config'
-import Paginator from './Paginator'
+import { Paginator, PaginateLinks } from './Paginator'
 
 const HelpList = ({ articles }) => {
 
     const [page, setPage] = useState(1)
     const [paginatedData, setPaginatedData] = useState(Paginator(articles, 1, Config.ITEMS_PER_PAGE))
+
+    const handlePageClick = (e, newPage) => {
+        e.preventDefault()
+        setPage(newPage)
+        setPaginatedData(Paginator(articles, newPage, Config.ITEMS_PER_PAGE))
+    }
 
     return (
         <div>
@@ -22,8 +28,15 @@ const HelpList = ({ articles }) => {
                         </article>
                     </div>
                 ))}
-                <hr className="c-divider" />
             </div>
+            <hr className="c-divider" />
+            <ul className="o-list-inline">
+                {PaginateLinks(page, paginatedData.total_pages).map(pageId => (
+                    <li className="o-list-inline__item" key={pageId}>
+                        <button className={`c-link ${pageId === page ? "active" : ""}`} onClick={(e) => handlePageClick(e, pageId)}>{pageId}</button>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
