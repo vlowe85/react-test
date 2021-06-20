@@ -9,6 +9,13 @@ Further considerations with more time
 - If the app was going to scale, extract Http service for network calls, structure files in subfolders
 - Learn more about React
 
+Retrospective comments after time
+- The search form should be refactored into more reusable components - ie extract the pagination into its own component (single responsibility)
+- Further validation on the user input and URI encode the string before fetching data from the API
+- Store previous searches in state, same for search input field, would be more a React way of doing things
+- For back button handling, a nicer solution would be to use a React class component and use the lifecycle method `componentWillUnmount` to call the API with the previous query
+
+
 ### `npm start`
 
 Runs the app in the development mode.\
